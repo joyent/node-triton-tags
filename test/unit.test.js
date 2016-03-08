@@ -26,7 +26,7 @@ test('isTritonTag', function (t) {
         'triton.foo',
         'triton.cns.disable'
     ].forEach(function (key) {
-        t.equal(isTritonTag(key), true, key);
+        t.equal(isTritonTag(key), true, 'is a triton tag: ' + key);
     });
 
     [
@@ -34,8 +34,8 @@ test('isTritonTag', function (t) {
         'cns.disable',
         ''
     ].forEach(function (key) {
-        t.equal(isTritonTag(key), false, key);
-    })
+        t.equal(isTritonTag(key), false, 'is not a triton tag: ' + key);
+    });
 
     t.end();
 });

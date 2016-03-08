@@ -25,11 +25,11 @@ all:
 
 .PHONY: test
 test:
-	NODE_NDEBUG= ./node_modules/.bin/tape test/test.js
+	NODE_NDEBUG= ./node_modules/.bin/tape test/*.test.js
 
 .PHONY: test-in-parallel
 test-in-parallel:
-	NODE_NDEBUG= prove -j15 -e ./node_modules/.bin/tape test/test.js
+	NODE_NDEBUG= prove -j15 -e ./node_modules/.bin/tape test/*.test.js
 
 .PHONY: clean
 clean::
