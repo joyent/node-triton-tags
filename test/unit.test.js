@@ -5,16 +5,109 @@
  */
 
 /*
- * Copyright (c) 2015, Joyent, Inc.
+ * Copyright 2016, Joyent, Inc.
  */
 
 /*
  * Unit tests for "triton-tags"
  */
 
+var format = require('util').format;
 var test = require('tape');
+var vasync = require('vasync');
 
 var triton_tags = require('../');
+
+
+// ---- test data
+
+/*
+ * `parseTritonTagStr` tests use key, str, val and err
+ * `validateTritonTag` tests use key, val (or str if `val` isn't set) and
+ *      errmsg (or `err` if errmsg isn't set)
+ *
+ */
+var cases = [
+    // Basics:
+    {
+        key: 'triton._test.string',
+        str: 'astr',
+        val: 'astr'
+    },
+    {
+        key: 'triton._test.string',
+        str: '',
+        val: ''
+    },
+    {
+        key: 'triton._test.boolean',
+        str: 'true',
+        val: true
+    },
+    {
+        key: 'triton._test.boolean',
+        str: 'false',
+        val: false
+    },
+    {
+        key: 'triton._test.number',
+        str: '42',
+        val: 42
+    },
+
+    // Some type failures:
+    {
+        key: 'triton._test.boolean',
+        str: 'not a bool',
+        /* JSSTYLED */
+        err: /Triton tag "triton._test.boolean" value must be "true" or "false": "not a bool"/,
+        /* JSSTYLED */
+        errmsg: /Triton tag "triton._test.boolean" value must be a boolean: "not a bool"/
+    },
+    {
+        key: 'triton._test.number',
+        str: 'not a num',
+        /* JSSTYLED */
+        err: /Triton tag "triton._test.number" value must be a number: "not a num"/
+    },
+    {
+        key: 'triton._test.number',
+        str: '',
+        /* JSSTYLED */
+        err: /Triton tag "triton._test.number" value must be a number: ""/
+    },
+
+    // Unknown tag:
+    {
+        key: 'triton.unknown',
+        str: '',
+        /* JSSTYLED */
+        err: /Unrecognized special triton tag \"triton.unknown\"/
+    },
+
+    // triton.cns.disable
+    {
+        key: 'triton.cns.disable',
+        str: 'true',
+        val: true
+    },
+    {
+        key: 'triton.cns.disable',
+        str: 'false',
+        val: false
+    },
+    {
+        key: 'triton.cns.disable',
+        str: 'booga',
+        /* JSSTYLED */
+        err: /Triton tag "triton.cns.disable" value must be "true" or "false": "booga"/,
+        /* JSSTYLED */
+        errmsg: /Triton tag "triton.cns.disable" value must be a boolean: "booga"/
+    }
+
+    // TODO: triton.cns.services
+    // TODO: triton.cns.reverse_ptr
+];
 
 
 // ---- tests
@@ -38,4 +131,56 @@ test('isTritonTag', function (t) {
     });
 
     t.end();
+});
+
+
+test('parseTritonTagStr', function (t) {
+    var parseTritonTagStr = triton_tags.parseTritonTagStr;
+
+    vasync.forEachPipeline({
+        inputs: cases,
+        func: function testOneCase(c, next) {
+            parseTritonTagStr(c.key, c.str, function (err, val) {
+                var name = format('parseTritonTagStr(%j, %j)',
+                    c.key, c.str);
+                if (c.err) {
+                    t.ok(err, name + ' (expect err)');
+                    t.ok(c.err.exec(err.message), format(
+                        'err.message matches %s: %j', c.err, err.message));
+                    t.ok(val === undefined);
+                } else {
+                    t.ifErr(err, name);
+                    t.equal(val, c.val, 'val');
+                }
+                next();
+            });
+        }
+    }, function (err) {
+        t.ifErr(err, 'parseTritonTagStr cases');
+        t.end();
+    });
+});
+
+test('validateTritonTag', function (t) {
+    var validateTritonTag = triton_tags.validateTritonTag;
+
+    vasync.forEachPipeline({
+        inputs: cases,
+        func: function testOneCase(c, next) {
+            var val = (c.hasOwnProperty('val') ? c.val : c.str);
+            var name = format('validateTritonTag(%j, %j)', c.key, val);
+            var errmsg = validateTritonTag(c.key, val);
+            if (c.errmsg || c.err) {
+                t.ok(errmsg, name + ' (expect err)');
+                t.ok((c.errmsg || c.err).exec(errmsg), format(
+                    'errmsg matches %s: %j', (c.errmsg || c.err), errmsg));
+            } else {
+                t.ifErr(errmsg, name);
+            }
+            next();
+        }
+    }, function (err) {
+        t.ifErr(err, 'validateTritonTag cases');
+        t.end();
+    });
 });
