@@ -7,4 +7,4 @@
 
 ## 1.0.0
 
-Initial release.
+- DOCKER-736 Initial release.
