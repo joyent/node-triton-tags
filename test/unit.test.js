@@ -103,9 +103,74 @@ var cases = [
         err: /Triton tag "triton.cns.disable" value must be "true" or "false": "booga"/,
         /* JSSTYLED */
         errmsg: /Triton tag "triton.cns.disable" value must be a boolean: "booga"/
+    },
+
+    {
+        key: 'triton.cns.services',
+        str: '',
+        err: /Expected DNS name but end of input found/
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar',
+        val: 'foobar'
+    },
+    {
+        key: 'triton.cns.services',
+        str: '_foobar',
+        err: /Expected DNS name but "_" found/
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:1234',
+        val: 'foobar:1234'
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar,test',
+        val: 'foobar,test'
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:1234,test:1234',
+        val: 'foobar:1234,test:1234'
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:abcd',
+        err: /Expected "=" but end of input found/
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        err: /63 or fewer characters/
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:123123123123',
+        err: /must be within the range 0 - 65535/
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:1234:priority=10',
+        val: 'foobar:1234:priority=10'
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:port=1234',
+        val: 'foobar:port=1234'
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:invalid=somevalue1',
+        err: /not a valid property name/
+    },
+    {
+        key: 'triton.cns.services',
+        str: 'foobar:priority=aaaaaaa',
+        err: /must be within the range 0 - 65535/
     }
 
-    // TODO: triton.cns.services
     // TODO: triton.cns.reverse_ptr
 ];
 

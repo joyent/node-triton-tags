@@ -8,6 +8,7 @@
 # Vars, Tools, Files, Flags
 #
 JS_FILES	:= $(shell find lib test -name '*.js' | grep -v '/tmp/')
+PEGJS_FILES	 = lib/cns-svc-tag.js
 JSL_CONF_NODE	 = tools/jsl.node.conf
 JSL_FILES_NODE	 = $(JS_FILES)
 JSSTYLE_FILES	 = $(JS_FILES)
@@ -20,19 +21,26 @@ include ./tools/mk/Makefile.defs
 # Targets
 #
 .PHONY: all
-all:
+all: $(PEGJS_FILES)
 	npm install
 
+PEGJS		= node_modules/.bin/pegjs
+$(PEGJS):
+	npm install pegjs
+%.js: %.pegjs $(PEGJS)
+	$(PEGJS) $< $@
+
 .PHONY: test
-test:
+test: all
 	NODE_NDEBUG= ./node_modules/.bin/tape test/*.test.js
 
 .PHONY: test-in-parallel
-test-in-parallel:
+test-in-parallel: all
 	NODE_NDEBUG= prove -j15 -e ./node_modules/.bin/tape test/*.test.js
 
 .PHONY: clean
 clean::
+	rm -f $(PEGJS_FILES)
 	rm -f triton-tags-*.tgz
 
 check:: versioncheck

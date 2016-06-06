@@ -1,12 +1,13 @@
 {
   "name": "triton-tags",
   "description": "Triton tags parsing and validation",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": "Joyent (joyent.com)",
   "dependencies": {
     "assert-plus": "^1.0.0"
   },
   "devDependencies": {
+    "pegjs": "^0.9.0",
     "tape": "^4.5.1",
     "vasync": "^1.6.3"
   },
