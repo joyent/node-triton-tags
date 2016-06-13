@@ -118,6 +118,7 @@ var cases = [
     {
         key: 'triton.cns.services',
         str: '_foobar',
+        /* JSSTYLED */
         err: /Expected DNS name but "_" found/
     },
     {
@@ -138,6 +139,7 @@ var cases = [
     {
         key: 'triton.cns.services',
         str: 'foobar:abcd',
+        /* JSSTYLED */
         err: /Expected "=" but end of input found/
     },
     {
