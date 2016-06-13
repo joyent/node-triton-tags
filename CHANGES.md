@@ -1,9 +1,10 @@
 # node-triton-tags changelog
 
-## 1.0.1 (not yet released)
+## 1.1.0
 
-(nothing yet)
-
+- CNS-147: new PEG parser for triton.cns.services tag, so this can be
+  shared with triton-cns as well. Now supports ports for SRV records and
+  extensible properties.
 
 ## 1.0.0
 
