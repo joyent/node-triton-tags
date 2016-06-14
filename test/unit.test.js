@@ -133,6 +133,11 @@ var cases = [
     },
     {
         key: 'triton.cns.services',
+        str: 'foobar.dev:123',
+        val: 'foobar.dev:123'
+    },
+    {
+        key: 'triton.cns.services',
         str: 'foobar:1234,test:1234',
         val: 'foobar:1234,test:1234'
     },
