@@ -256,3 +256,16 @@ test('validateTritonTag', function (t) {
         t.end();
     });
 });
+
+var parser = require('../lib/cns-svc-tag');
+test('cns services tag regressions', function (t) {
+	/* CNS-152 */
+	t.deepEqual(parser.parse('foo.dev,test.dev'), [
+	    { name: 'foo.dev' }, { name: 'test.dev' }
+	]);
+	/* CNS-153 */
+	t.deepEqual(parser.parse('someName'), [
+	    { name: 'somename' }
+	]);
+	t.end();
+});

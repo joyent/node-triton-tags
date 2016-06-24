@@ -1,5 +1,10 @@
 # node-triton-tags changelog
 
+## 1.1.2
+
+- CNS-153: Upper case in services tags stopped working (another unplanned
+  feature)
+
 ## 1.1.1
 
 - CNS-152: allowing periods in service names: an unplanned feature
