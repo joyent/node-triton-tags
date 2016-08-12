@@ -176,6 +176,11 @@ var cases = [
         key: 'triton.cns.services',
         str: 'foobar:priority=aaaaaaa',
         err: /must be within the range 0 - 65535/
+    },
+    {
+        key: 'triton.cns.services',
+        str: '5foobar',
+        val: '5foobar'
     }
 
     // TODO: triton.cns.reverse_ptr

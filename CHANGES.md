@@ -1,5 +1,11 @@
 # node-triton-tags changelog
 
+## 1.1.3
+
+- joyent/node-triton-tags#2: allow DNS names to start with a number. Even
+  though this is not recommended by the DNS RFCs, in practice it is used
+  fairly commonly (including by a number of major websites)
+
 ## 1.1.2
 
 - CNS-153: Upper case in services tags stopped working (another unplanned
