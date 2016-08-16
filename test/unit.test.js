@@ -155,7 +155,7 @@ var cases = [
     {
         key: 'triton.cns.services',
         str: 'foobar:123123123123',
-        err: /must be within the range 0 - 65535/
+        err: /must be within the range 1 - 65535/
     },
     {
         key: 'triton.cns.services',
