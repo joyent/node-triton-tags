@@ -1,5 +1,9 @@
 # node-triton-tags changelog
 
+## 1.1.4
+
+- DOCKER-1020: Add 'triton.network.public' tag
+
 ## 1.1.3
 
 - joyent/node-triton-tags#2: allow DNS names to start with a number. Even
