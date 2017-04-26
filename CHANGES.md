@@ -1,5 +1,10 @@
 # node-triton-tags changelog
 
+## 1.1.5 (not yet released)
+
+(nothing yet)
+
+
 ## 1.1.4
 
 - DOCKER-1020: Add 'triton.network.public' tag
