@@ -181,6 +181,21 @@ var cases = [
         key: 'triton.cns.services',
         str: '5foobar',
         val: '5foobar'
+    },
+    {
+        key: 'triton.system_role',
+        str: 'nfsvolumestorage',
+        val: 'nfsvolumestorage'
+    },
+    {
+        key: 'triton.system_role',
+        str: 'foo',
+        err: /invalid.*triton\.system_role.*tag/
+    },
+    {
+        key: 'triton.system_role',
+        str: '',
+        err: /invalid.*triton\.system_role.*tag/
     }
 
     // TODO: triton.cns.reverse_ptr

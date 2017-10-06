@@ -2,8 +2,8 @@
 
 ## 1.1.5 (not yet released)
 
-(nothing yet)
-
+- VOLAPI-85: replace smartdc_role=nfsvolumestorage with
+  triton.system_role=nfsvolumestorage
 
 ## 1.1.4
 
