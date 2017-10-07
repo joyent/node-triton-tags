@@ -1,9 +1,8 @@
 # node-triton-tags changelog
 
-## 1.1.5 (not yet released)
+## not yet released
 
 (nothing yet)
-
 
 ## 1.1.4
 
