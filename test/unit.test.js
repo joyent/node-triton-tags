@@ -181,9 +181,28 @@ var cases = [
         key: 'triton.cns.services',
         str: '5foobar',
         val: '5foobar'
-    }
+    },
 
     // TODO: triton.cns.reverse_ptr
+
+    {
+        key: 'triton.instance.undeletable',
+        str: 'true',
+        val: true
+    },
+    {
+        key: 'triton.instance.undeletable',
+        str: 'false',
+        val: false
+    },
+    {
+        key: 'triton.instance.undeletable',
+        str: 'booga',
+        /* JSSTYLED */
+        err: /Triton tag "triton.instance.undeletable" value must be "true" or "false": "booga"/,
+        /* JSSTYLED */
+        errmsg: /Triton tag "triton.instance.undeletable" value must be a boolean: "booga"/
+    }
 ];
 
 
