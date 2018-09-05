@@ -4,6 +4,10 @@
 
 (nothing yet)
 
+## 1.2.0
+
+- TRITON-755: Want ability to filter CMON discovery results by tag
+
 ## 1.1.4
 
 - DOCKER-1020: Add 'triton.network.public' tag
