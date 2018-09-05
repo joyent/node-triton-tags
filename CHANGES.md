@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 1.2.0
+
+- TRITON-755: Add support for 'triton.cmon.groups' tag. This tag is used for
+  filtering the set of results returned by the CMON discover endpoint.
+
 ## 1.1.4
 
 - DOCKER-1020: Add 'triton.network.public' tag

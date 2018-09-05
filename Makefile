@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2017, Joyent, Inc.
+# Copyright (c) 2018, Joyent, Inc.
 #
 # Makefile for node-triton-tags
 #
@@ -8,7 +8,7 @@
 # Vars, Tools, Files, Flags
 #
 JS_FILES	:= $(shell find lib test -name '*.js' | grep -v '/tmp/')
-PEGJS_FILES	:= lib/cns-svc-tag.js
+PEGJS_FILES	:= lib/cns-svc-tag.js lib/cmon-groups-tag.js
 # Exclude the auto-generated PEGJS outputs from "make check"
 JS_FILES	:= $(filter-out $(PEGJS_FILES),$(JS_FILES))
 
