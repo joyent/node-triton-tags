@@ -4,6 +4,10 @@
 
 (nothing yet)
 
+## 1.2.1
+
+- TRITON-755: Fix missing peg.js generated files
+
 ## 1.2.0
 
 - TRITON-755: Add support for 'triton.cmon.groups' tag. This tag is used for
