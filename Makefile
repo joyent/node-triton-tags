@@ -17,21 +17,29 @@ JSL_FILES_NODE	 = $(JS_FILES)
 JSSTYLE_FILES	 = $(JS_FILES)
 JSSTYLE_FLAGS	 = -f tools/jsstyle.conf
 CLEAN_FILES += ./node_modules
+PEGJS	= node_modules/.bin/pegjs
 
 include ./tools/mk/Makefile.defs
+
 
 #
 # Targets
 #
+
 .PHONY: all
-all: $(PEGJS_FILES)
+all $(PEGJS):
 	npm install
 
-PEGJS		= node_modules/.bin/pegjs
-$(PEGJS):
-	npm install pegjs
+# The phony "pegjsfiles" target is here for the "prepublish" npm script to call
+# to ensure pegjs files are rendered before release.
+.PHONY: pegjsfiles
+pegjsfiles: $(PEGJS_FILES)
+
 %.js: %.pegjs $(PEGJS)
-	$(PEGJS) $< $@
+	$(PEGJS) $< > $@
+
+CLEAN_FILES += $(PEGJS_FILES) triton-tags-*.tgz
+
 
 .PHONY: test
 test: all
@@ -41,23 +49,18 @@ test: all
 test-in-parallel: all
 	NODE_NDEBUG= prove -j15 -e ./node_modules/.bin/tape test/*.test.js
 
-.PHONY: clean
-clean::
-	rm -f $(PEGJS_FILES)
-	rm -f triton-tags-*.tgz
-
-check:: versioncheck
 
 # Ensure CHANGES.md and package.json have the same version.
-.PHONY: versioncheck
-versioncheck:
+.PHONY: check-version
+check-version:
 	@echo version is: $(shell cat package.json | json version)
 	[[ `cat package.json | json version` == `grep '^## ' CHANGES.md | head -2 | tail -1 | awk '{print $$2}'` ]]
 
-check:: versioncheck
+check:: check-version
 
+# Publish a release to npm properly.
 .PHONY: cutarelease
-cutarelease: $(COMPLETION_FILE) versioncheck
+cutarelease: pegjsfiles check-version
 	[[ -z `git status --short` ]]  # If this fails, the working dir is dirty.
 	@which json 2>/dev/null 1>/dev/null && \
 	    ver=$(shell json -f package.json version) && \

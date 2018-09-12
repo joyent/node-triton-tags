@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 1.2.2
+
+- TRITON-755 Fix the release process (`make cutarelease`) to ensure pegjs files
+  are built and included in the published files.
+
 ## 1.2.1
 
 - TRITON-755: Fix missing peg.js generated files
