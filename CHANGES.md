@@ -4,6 +4,11 @@
 
 (nothing yet)
 
+## 1.3.0
+
+- TRITON-1242: Add `triton.placement.exclude_virtual_servers` boolean tag. This
+  is used to tell DAPI to filter out virtual servers (e.g. mockcloud).
+
 ## 1.2.2
 
 - TRITON-755 Fix the release process (`make cutarelease`) to ensure pegjs files
